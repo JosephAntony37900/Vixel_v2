@@ -19,7 +19,8 @@ export default function StreamMain() {
         }
     }, []);
 
-    const handleWatchLiveStream = () => {
+    const handleWatchLiveStream = (stream) => {
+        localStorage.setItem('currentStream', JSON.stringify(stream));
         navigate("/watchStreamer");
     };
 
@@ -35,7 +36,7 @@ export default function StreamMain() {
                 {liveStreams.length > 0 ? (
                     <div className="content-streams">
                         {liveStreams.map((stream, index) => (
-                            <div key={index} className="stream-card" onClick={handleWatchLiveStream}>
+                            <div key={index} className="stream-card" onClick={() => handleWatchLiveStream(stream)}>
                                 <img src={stream.coverImage} alt="Portada del Stream" />
                                 <div className="stream-info">
                                     <h3>{stream.title}</h3>

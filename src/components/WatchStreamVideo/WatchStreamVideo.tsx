@@ -103,7 +103,7 @@ export default function WatchStreamVideo (){
     }
 
     return (
-        <main>
+        <main className='container-stream'>
             <div className="user">
                 <div className="profileAndName">
                     <img src={profilePicture} alt="Profile" />
@@ -116,7 +116,9 @@ export default function WatchStreamVideo (){
                     
                     <video ref={videoRef} className="video-preview" muted />
                 </div>
-                {!isStreaming ? (
+                
+            </div>
+            {!isStreaming ? (
                     <button className="start-button" onClick={startStream}>
                         Iniciar Transmisión
                     </button>
@@ -125,7 +127,6 @@ export default function WatchStreamVideo (){
                         Detener y Guardar
                     </button>
                 )}
-            </div>
             <div className='letterSize'>
                 <h1>{streamData.title}</h1>
                 <h1>Descripción</h1>

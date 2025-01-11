@@ -18,8 +18,7 @@ export default function NavbarHeader({ isNavOpen, handleNavToggle }) {
       <ul className="navbar-list">
         <NavbarOptions hreferencia={"/home"} pageName={"Inicio"} />
         <NavbarOptions hreferencia={"#torneos"} pageName={"Torneos"} />
-        <NavbarOptions hreferencia={"#tournament"} pageName={"Tienda"} />
-        <NavbarOptions hreferencia={"#team"} pageName={"Teams"} />
+        <NavbarOptions hreferencia={"/sell"} pageName={"Canjear varacoin"} />
         <NavbarOptions hreferencia={"#gears"} pageName={"Streams"} />
         <NavbarOptions hreferencia={"#contact"} pageName={"Contact"} />
       </ul>

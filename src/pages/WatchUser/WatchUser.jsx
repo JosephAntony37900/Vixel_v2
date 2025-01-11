@@ -1,15 +1,16 @@
 import HeaderPage from "@/components/Organismos/HeaderPage/HeaderPage";
-import "./Stream.css";
+import "./WatchUser.css";
 import RgbLine from "@/components/Atoms/RgbLine/RgbLine";
 import FooterPage from "@/components/Organismos/FooterPage/FooterPage";
-import StreamMain from "@/components/Plantillas/StreamMain/StreamMain";
+import WatchUserStream from "@/components/Plantillas/WatchUserStream/WatchUserStream";
 
-export default function Stream() {
-    return (
+export default function WatchUser(){
+    return(
         <main>
             <HeaderPage/>
-            <div>
-                <StreamMain/>
+            <div className="big-content-add-watch-user">
+                <h2 className="justify-this-content4">Viendo Stream </h2> 
+                <WatchUserStream/>
                 <RgbLine/>
             </div>
             <FooterPage/>

@@ -26,6 +26,55 @@ export const sponsorName = 'Alice';
 export const sponsorMnemonic = 'bottom drive obey lake curtain smoke basket hold race lonely fit walk';
 // El CONTRACT_DATA solo es un ejemplo de este template, ya que es un contrato inteligente de vara para hacer las transacciones de prueba, en cambio los otros dos son mios, utilizando asi vft, porque eso me sirva
 
+export const VIXEL_CONTRACT: ContractSails = {
+  programId: '0x1138281d292b5b2e9ad0808047fdbbd28f6d0d9135dec8449a5f38d0f59fcf1c',
+  idl: `
+  type VixelcoinSystemEvents = enum {
+  UserRegistred: struct { message: str, actor_id: actor_id, username: str },
+  VixecoinsBought: struct { message: str, actor_id: actor_id, username: str, vara_amount: u128, vixelcoin_bought: u128, total_vixelcoin: u128 },
+  VixelcoinsEarned: struct { message: str, actor_id: actor_id, vixelcoins_amount: u128 },
+  VarasBought: struct { message: str, actor_id: actor_id, username: str, vixelcoin_amount: u128, vara_bought: u128, total_vixelcoin: u128 },
+  VixelcoinsSpended: u128,
+  VarasTransfered: struct { message: str, from: actor_id, to: actor_id, vixelcoin_amount: u128 },
+  SeeUser: struct { actor_id: actor_id, username: str, total_vixelcoins: u128 },
+  SeeBalanceOfTheProgram: struct { vixelcoins: u128, varas: u128 },
+  VixelcoinsAdded: u128,
+  VixelcoinsBurned: u128,
+  Error: VixelCoinSystemErrors,
+};
+
+type VixelCoinSystemErrors = enum {
+  UserNotFound,
+  UserExists,
+  WithoutSomeInputs,
+  MustBeGreaterThan0,
+  InsuficentBalanceInTheContract: u128,
+  InsuficentBalanceOfVixelcoinsInTheContract,
+  InsuficentVixelcoins: u128,
+  ErrorInTheTransaction,
+  StateNotInicializated,
+};
+
+constructor {
+  New : (vixel_coins: u128);
+};
+
+service VixelcoinSystem {
+  AddVixelcoinsToTheContract : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  BurnVixelcoinsToTheContract : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  BuyVixelcoins : () -> VixelcoinSystemEvents;
+  EarnAwardOfVixelcoins : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  RegisterUser : (user_name: str) -> VixelcoinSystemEvents;
+  SellVixelcoins : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  SpendVixelcoinsInTheSystem : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  TransferVixelcoins : (amount_of_vixelcoins: u128, destinatary: actor_id) -> VixelcoinSystemEvents;
+  query SeeVixelcoinsOfAnUser : (adress: actor_id) -> VixelcoinSystemEvents;
+  query SeeVixelcoinsOfTheProgram : () -> VixelcoinSystemEvents;
+};
+
+  `
+};
+
 export const CONTRACT_DATA: ContractSails = {
   programId: '0x615556ca4bb31c9b3b9a5c30b20e110ffd51ffc78784308ea6ac2f9fbac13aa5',
   idl: `

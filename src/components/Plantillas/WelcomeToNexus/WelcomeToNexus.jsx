@@ -1,7 +1,8 @@
 import React from "react";
 import './WelcomeToNexus.css'
 import RegistrerButton from "../../Atoms/RegistrerButton/RegistrerButton";
-import Logo from '../../../icons/VixelSinFondo.png'
+import Logo from '../../../icons/logito.png'
+import { ClassNames } from "@emotion/react";
 
 export default function WelcomeToNexus (){
     return(
@@ -10,7 +11,7 @@ export default function WelcomeToNexus (){
 
           <p class="hero-subtitle">Bienvenidos a</p>
           <div className="vixel-name-logo">
-            <img src={Logo} />
+            {/*< img className="logoo" src={Logo} />*/}
             <h4>VIXEL</h4>
           </div>
           {/*<h1 class="hero-title">VIXEL (Aquí debería ir el logo)</h1>*/}
@@ -18,7 +19,7 @@ export default function WelcomeToNexus (){
           <div class="btn-group">
 
             <RegistrerButton/>
-            <button class="btn btn-link">Torneos</button>
+            <button class="btn btn-link" >Torneos</button>
 
           </div>
 

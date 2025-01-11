@@ -8,7 +8,7 @@ import { useSailsCalls } from '@/app/hooks';
 import { useAccount, useAlert } from '@gear-js/react-hooks';
 import { Codec, CodecClass, Signer } from '@polkadot/types/types';
 import { HexString } from '@gear-js/api';
-import { web3FromSource } from '@polkadot/extension-dapp';
+import { web3Enable,web3FromSource } from '@polkadot/extension-dapp';
 
 export default function JoinInAGlobalTournamentMain() {
     const { account } = useAccount();
@@ -51,6 +51,13 @@ export default function JoinInAGlobalTournamentMain() {
                         alert.error('SailsCalls is not ready!');
                         return;
                     }
+
+                    const extensions = await web3Enable('diavlo');
+                    
+                          if (extensions.length === 0) {
+                              console.error('No Web3 extensions found or the user denied access.');
+                              return;
+                          }
 
                     const [userAddress, signer] = await getUserSigner();
 

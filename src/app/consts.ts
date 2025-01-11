@@ -27,9 +27,21 @@ export const sponsorMnemonic = 'bottom drive obey lake curtain smoke basket hold
 // El CONTRACT_DATA solo es un ejemplo de este template, ya que es un contrato inteligente de vara para hacer las transacciones de prueba, en cambio los otros dos son mios, utilizando asi vft, porque eso me sirva
 
 export const VIXEL_CONTRACT: ContractSails = {
-  programId: '0x1138281d292b5b2e9ad0808047fdbbd28f6d0d9135dec8449a5f38d0f59fcf1c',
+  programId: '0xd6e4e6bffa2a48886f235625d80c02c4c899d981a0daee5a51f8fa27baf63a0b',
   idl: `
-  type VixelcoinSystemEvents = enum {
+  type CheemsScapeEvents = enum {
+  ScoreRegistred: struct { message: str, id_actor: actor_id, score: u32 },
+  PlayerDontHaveEnoughScore,
+  FirstTeenBestPlayers: vec DataPlayerCheemsScape,
+};
+
+type DataPlayerCheemsScape = struct {
+  address: actor_id,
+  username: str,
+  score: u32,
+};
+
+type VixelcoinSystemEvents = enum {
   UserRegistred: struct { message: str, actor_id: actor_id, username: str },
   VixecoinsBought: struct { message: str, actor_id: actor_id, username: str, vara_amount: u128, vixelcoin_bought: u128, total_vixelcoin: u128 },
   VixelcoinsEarned: struct { message: str, actor_id: actor_id, vixelcoins_amount: u128 },
@@ -55,8 +67,25 @@ type VixelCoinSystemErrors = enum {
   StateNotInicializated,
 };
 
+type WhaleXPaceEvents = enum {
+  ScoreRegistred: struct { message: str, id_actor: actor_id, score: u32 },
+  PlayerDontHaveEnoughScore,
+  FirstTeenBestPlayers: vec DataPlayerWhaleXPace,
+};
+
+type DataPlayerWhaleXPace = struct {
+  address: actor_id,
+  username: str,
+  score: u32,
+};
+
 constructor {
   New : (vixel_coins: u128);
+};
+
+service CheemsCapeServices {
+  SetScore : (username: str, score: u32) -> CheemsScapeEvents;
+  query GetFirstTeenPlayers : () -> CheemsScapeEvents;
 };
 
 service VixelcoinSystem {
@@ -71,6 +100,12 @@ service VixelcoinSystem {
   query SeeVixelcoinsOfAnUser : (adress: actor_id) -> VixelcoinSystemEvents;
   query SeeVixelcoinsOfTheProgram : () -> VixelcoinSystemEvents;
 };
+
+service WhaleXPaceServices {
+  SetScore : (username: str, score: u32) -> WhaleXPaceEvents;
+  query GetFirstTeenPlayers : () -> WhaleXPaceEvents;
+};
+
 
   `
 };

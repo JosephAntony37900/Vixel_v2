@@ -15,10 +15,11 @@ import AddStream from "./AddStreaming/AddStream";
 import WatchStream from "./WatchStream/WatchStream";
 import { VixelcoinSellForm } from "./IntercambiarTokens/intercambiar";
 import WatchUser from "./WatchUser/WatchUser";
+import { RegisterUserForm } from "./UserContrats/UserContrats";
 
 
 const routes = [
-  { path: "/", Page: Landing },
+  //{ path: "/", Page: Landing },
   { path: "/home", Page: Home },
   { path: "/games", Page: OurGames },
   { path: "/tournaments", Page: Tournaments},
@@ -32,7 +33,8 @@ const routes = [
   {path: "/addStream", Page: AddStream},
   {path: "/watchStream", Page: WatchStream},
   {path: "/sell", Page: VixelcoinSellForm},
-  {path: "/watchStreamer", Page: WatchUser}
+  {path: "/watchStreamer", Page: WatchUser},
+  {path: "/", Page: RegisterUserForm}
    ];
 
 function Routing() {

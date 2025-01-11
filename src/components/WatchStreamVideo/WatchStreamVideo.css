@@ -1,7 +1,8 @@
 .container-add-watch-form-body {
     position: relative;
     width: 70%;
-    left: 14%;
+    height: 50vh;
+    left: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,10 +15,16 @@
     z-index: 1;
   }
 
+.container-stream {
+  display: flex;
+  flex-direction: column;
+  align-items: center ;
+}
+
 .user {
+  width: 70%;
     display: flex;
     align-items: center;
-    margin-left: 60px;
     /*justify-content: space-between;*/
 }
 
@@ -29,7 +36,6 @@
 
 .profileAndName {
     display: flex;
-    margin-left: 130px;
     padding: 20px;
 }
 
@@ -46,6 +52,7 @@
 .add-watch-form-body {
     position: relative;
     width: 98%;
+    height: 98%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -74,6 +81,11 @@
     pointer-events: none;
     box-sizing: border-box;
     z-index: 1;
+  }
+
+  .add-watch-form-body video {
+    min-width: 100%;
+    min-height: 100%;
   }
     
 .add-watch-from-camps {

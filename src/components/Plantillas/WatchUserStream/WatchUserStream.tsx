@@ -4,6 +4,7 @@ import profilePicture from '../../../img/team-member-5.png';
 
 export default function WatchUserStream (){
     const [streamData, setStreamData] = useState(null);
+    const [isLiveStream, setIsLiveStream] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
@@ -14,6 +15,7 @@ export default function WatchUserStream (){
             setStreamData(recordedStream);
         } else if (currentStream) {
             setStreamData(currentStream);
+            setIsLiveStream(true);
         }
     }, []);
 
@@ -21,8 +23,19 @@ export default function WatchUserStream (){
         return <div>No hay stream disponible.</div>;
     }
 
+    const startStream = async () => {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+        });
+        if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            videoRef.current.play();
+        }
+    };
+
     return (
-        <main>
+        <main className='container-stream'>
             <div className="user">
                 <div className="profileAndName">
                     <img src={profilePicture} alt="Profile" />
@@ -32,12 +45,16 @@ export default function WatchUserStream (){
             </div>
             <div className="container-add-watch-form-body">
                 <div className="add-watch-form-body">
-                    <video ref={videoRef} className="video-preview" controls>
-                        <source src={streamData.videoUrl} type="video/webm" />
-                    </video>
+                    {isLiveStream ? (
+                        <video ref={videoRef} className="video-preview" autoPlay muted />
+                    ) : (
+                        <video ref={videoRef} className="video-preview" controls>
+                            <source src={streamData.videoUrl} type="video/webm" />
+                        </video>
+                    )}
                 </div>
-                Stream Grabado
             </div>
+            Streaming
             <div className='letterSize'>
                 <h1>{streamData.title}</h1>
                 <h1>Descripción</h1>

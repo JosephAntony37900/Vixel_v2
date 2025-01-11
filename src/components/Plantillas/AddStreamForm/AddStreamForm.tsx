@@ -1,67 +1,52 @@
-import React from 'react';
-import ButtonWhitFunction from "@/components/Atoms/ButtonWhitFunction/ButtonWhitFunction";
-import ImageUpload from '@/components/Atoms/ImageUpload/ImageUplodad';
-import './AddStreamForm.css';
-import { useNavigate } from "react-router-dom";
-import { useSailsCalls } from '@/app/hooks';
-import { useAccount, useAlert } from '@gear-js/react-hooks';
-import { Codec, CodecClass, Signer } from '@polkadot/types/types';
-import { HexString } from '@gear-js/api';
-import { web3FromSource } from '@polkadot/extension-dapp';
-import { Button } from '@gear-js/vara-ui';
+import React, { useState } from "react";
+import "./AddStreamForm.css";
+import ImageUpload from "@/components/Atoms/ImageUpload/ImageUplodad";
 
-export default function AddStreamForm (){
-    const { account } = useAccount();
-    const sails = useSailsCalls();
-    const alert = useAlert();
-    const navigate = useNavigate();
+export default function AddStreamForm({ onStreamCreated }) {
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [coverImage, setCoverImage] = useState(null);
 
-    const getUserSigner = (): Promise<[HexString, Signer]> => {
-        return new Promise(async (resolve, reject) => {
-            if (!account) {
-                alert.error("Accounts not ready!");
-                reject('Account not ready!');
-                return;
-            }
-
-            const { signer } = await web3FromSource(account.meta.source);
-            const temp = (signer as string | CodecClass<Codec, any[]>) as Signer;
-            resolve([account.decodedAddress, temp]);
-        });
+    const handleImageUpload = (imageUrl) => {
+        setCoverImage(imageUrl);
     };
 
-    return(
+    const handleSubmit = () => {
+        const streamData = {
+            title,
+            description,
+            coverImage,
+        };
+        onStreamCreated(streamData);
+    };
+
+    return (
         <main className="add-streams-form-body">
             <div className="add-streams-from-camps">
                 <h1>Titulo</h1>
-                <input type="text" id="get-name-stream" placeholder="Titulo de tu stream"/>
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Titulo de tu stream"
+                />
             </div>
             <div className="add-streams-from-camps">
                 <h1>Descripción</h1>
-                <textarea id="get-participants-stream" placeholder="Descripción de lo que trata el stream"/>
-            </div>
-            <div className="add-streams-from-camps">
-                <h1>Juego</h1>
-                <select id="get-game-stream">
-                    <option>Juego 1</option>
-                    <option>Juego 2</option>
-                    <option>Juego 3</option>
-                </select>
-            </div>
-            <div className="add-streams-from-camps">
-                <h1>Fecha de fin</h1>
-                <input type="date" id="get-date-stream"/>
+                <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Descripción de lo que trata el stream"
+                />
             </div>
             <div className="add-streams-from-camps">
                 <h1>Imagen de portada para el Stream</h1>
-                <ImageUpload /> {/* Incluimos el componente de subida de imagen */}
+                <ImageUpload onImageUpload={handleImageUpload} />
+                {coverImage && <img src={coverImage} alt="Imagen de portada" className="cover-image-preview" />}
             </div>
-            
-            <Button onClick={async () => {
-                navigate("/streams");
-            }}>
-                Crear
-            </Button>
+            <button className="start-button" onClick={handleSubmit}>
+                Iniciar Stream
+            </button>
         </main>
-    )
+    );
 }

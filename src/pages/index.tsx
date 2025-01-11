@@ -13,6 +13,8 @@ import Qualifying from "./Qualifying/Qualifying";
 import Stream from "./Stream/Stream";
 import AddStream from "./AddStreaming/AddStream";
 import WatchStream from "./WatchStream/WatchStream";
+import { VixelcoinSellForm } from "./IntercambiarTokens/intercambiar";
+import WatchUser from "./WatchUser/WatchUser";
 
 
 const routes = [
@@ -28,8 +30,10 @@ const routes = [
   {path: "/pay", Page: VixelPay},
   {path: "/streams", Page: Stream},
   {path: "/addStream", Page: AddStream},
-  {path: "/watchStream", Page: WatchStream}
-];
+  {path: "/watchStream", Page: WatchStream},
+  {path: "/sell", Page: VixelcoinSellForm},
+  {path: "/watchStreamer", Page: WatchUser}
+   ];
 
 function Routing() {
   const location = useLocation();

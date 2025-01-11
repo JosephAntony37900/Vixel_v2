@@ -1,13 +1,35 @@
 import React, { useState } from 'react';
 import './ImageUplodad.css';
 
-const ImageUpload = () => {
+const ImageUpload = ({ onImageUpload }) => {
   const [selectedImagePreview, setSelectedImagePreview] = useState<string | null>(null);
 
-  const onFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onFileSelected = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
       setSelectedImagePreview(URL.createObjectURL(file));
+
+      // Subir a Cloudinary
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "VixelCompany");
+
+      try {
+        const response = await fetch("https://api.cloudinary.com/v1_1/dtlrxc5um/image/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Cloudinary upload error: ${response.statusText} - ${errorText}`);
+        }
+
+        const data = await response.json();
+        onImageUpload(data.secure_url);
+      } catch (error) {
+        console.error("Error uploading image to Cloudinary:", error);
+      }
     }
   };
 

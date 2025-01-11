@@ -26,65 +26,52 @@ export const sponsorName = 'Alice';
 export const sponsorMnemonic = 'bottom drive obey lake curtain smoke basket hold race lonely fit walk';
 // El CONTRACT_DATA solo es un ejemplo de este template, ya que es un contrato inteligente de vara para hacer las transacciones de prueba, en cambio los otros dos son mios, utilizando asi vft, porque eso me sirva
 
-export const GVARA_CONTRACT: ContractSails = {
-  programId: '0x7d9ceb9aaf2c76a476c3f4eb777fd6ee43553cb7a3a3cd69f6e479dd821d1ddb',
+export const VIXEL_CONTRACT: ContractSails = {
+  programId: '0x1138281d292b5b2e9ad0808047fdbbd28f6d0d9135dec8449a5f38d0f59fcf1c',
   idl: `
-  type KeyringData = struct {
-      address: str,
-      encoded: str,
-    };
+  type VixelcoinSystemEvents = enum {
+  UserRegistred: struct { message: str, actor_id: actor_id, username: str },
+  VixecoinsBought: struct { message: str, actor_id: actor_id, username: str, vara_amount: u128, vixelcoin_bought: u128, total_vixelcoin: u128 },
+  VixelcoinsEarned: struct { message: str, actor_id: actor_id, vixelcoins_amount: u128 },
+  VarasBought: struct { message: str, actor_id: actor_id, username: str, vixelcoin_amount: u128, vara_bought: u128, total_vixelcoin: u128 },
+  VixelcoinsSpended: u128,
+  VarasTransfered: struct { message: str, from: actor_id, to: actor_id, vixelcoin_amount: u128 },
+  SeeUser: struct { actor_id: actor_id, username: str, total_vixelcoins: u128 },
+  SeeBalanceOfTheProgram: struct { vixelcoins: u128, varas: u128 },
+  VixelcoinsAdded: u128,
+  VixelcoinsBurned: u128,
+  Error: VixelCoinSystemErrors,
+};
 
-    type KeyringEvent = enum {
-      KeyringAccountSet,
-      Error: KeyringError,
-    };
+type VixelCoinSystemErrors = enum {
+  UserNotFound,
+  UserExists,
+  WithoutSomeInputs,
+  MustBeGreaterThan0,
+  InsuficentBalanceInTheContract: u128,
+  InsuficentBalanceOfVixelcoinsInTheContract,
+  InsuficentVixelcoins: u128,
+  ErrorInTheTransaction,
+  StateNotInicializated,
+};
 
-    type KeyringError = enum {
-      KeyringAddressAlreadyEsists,
-      UserAddressAlreadyExists,
-      UserCodedNameAlreadyExists,
-      UserDoesNotHasKeyringAccount,
-      KeyringAccountAlreadyExists,
-      SessionHasInvalidCredentials,
-      UserAndKeyringAddressAreTheSame,
-    };
+constructor {
+  New : (vixel_coins: u128);
+};
 
-    type PingEvent = enum {
-      Ping,
-      Pong,
-      KeyringError: KeyringError,
-    };
+service VixelcoinSystem {
+  AddVixelcoinsToTheContract : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  BurnVixelcoinsToTheContract : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  BuyVixelcoins : () -> VixelcoinSystemEvents;
+  EarnAwardOfVixelcoins : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  RegisterUser : (user_name: str) -> VixelcoinSystemEvents;
+  SellVixelcoins : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  SpendVixelcoinsInTheSystem : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  TransferVixelcoins : (amount_of_vixelcoins: u128, destinatary: actor_id) -> VixelcoinSystemEvents;
+  query SeeVixelcoinsOfAnUser : (adress: actor_id) -> VixelcoinSystemEvents;
+  query SeeVixelcoinsOfTheProgram : () -> VixelcoinSystemEvents;
+};
 
-    type KeyringQueryEvent = enum {
-      LastWhoCall: actor_id,
-      SignlessAccountAddress: opt actor_id,
-      SignlessAccountData: opt KeyringData,
-    };
-
-    constructor {
-      New : ();
-    };
-
-    service KeyringService {
-      BindKeyringDataToUserAddress : (user_address: actor_id, keyring_data: KeyringData) -> KeyringEvent;
-      BindKeyringDataToUserCodedName : (user_coded_name: str, keyring_data: KeyringData) -> KeyringEvent;
-    };
-
-    service Ping {
-      Ping : () -> PingEvent;
-      PingNoWallet : (user_coded_name: str) -> PingEvent;
-      PingSignless : (user_address: actor_id) -> PingEvent;
-      Pong : () -> PingEvent;
-      PongNoWallet : (user_coded_name: str) -> PingEvent;
-      PongSignless : (user_address: actor_id) -> PingEvent;
-    };
-
-    service QueryService {
-      query LastCaller : () -> actor_id;
-      query KeyringAccountData : (keyring_address: actor_id) -> KeyringQueryEvent;
-      query KeyringAddressFromUserAddress : (user_address: actor_id) -> KeyringQueryEvent;
-      query KeyringAddressFromUserCodedName : (user_coded_name: str) -> KeyringQueryEvent;
-    };
   `
 };
 

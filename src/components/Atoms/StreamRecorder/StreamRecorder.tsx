@@ -1,18 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
-import './WatchStreamVideo.css';
-import profilePicture from '../../img/team-member-5.png';
+import React, { useRef, useState } from "react";
+import "./StreamRecorder.css";
 
-export default function WatchStreamVideo (){
-    const [streamData, setStreamData] = useState(null);
+export default function StreamRecorder({ onStreamCreated }) {
+    const [isStreaming, setIsStreaming] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const recordedChunksRef = useRef<Blob[]>([]);
-    const [isStreaming, setIsStreaming] = useState(false);
-
-    useEffect(() => {
-        const data = JSON.parse(localStorage.getItem('currentStream'));
-        setStreamData(data);
-    }, []);
 
     const startStream = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -77,60 +70,25 @@ export default function WatchStreamVideo (){
                 const data = await response.json();
                 const cloudinaryUrl = data.secure_url;
 
-                // Save the link to the list of recorded videos
-                const recordedVideos = JSON.parse(localStorage.getItem('recordedVideos')) || [];
-                const newRecordedStream = {
-                    title: streamData.title,
-                    description: streamData.description,
-                    coverImage: streamData.coverImage,
-                    videoUrl: cloudinaryUrl,
-                    nameStreamer: "Streamercito" // Adjust this as needed
-                };
-                recordedVideos.push(newRecordedStream);
-                localStorage.setItem('recordedVideos', JSON.stringify(recordedVideos));
-                
-                // Remove current stream
-                localStorage.removeItem('currentStream');
-                setStreamData(null);
+                onStreamCreated(cloudinaryUrl);
             } catch (error) {
                 console.error("Error uploading video to Cloudinary:", error);
             }
         }
     };
 
-    if (!streamData) {
-        return <div>No hay stream disponible.</div>;
-    }
-
     return (
-        <main>
-            <div className="user">
-                <div className="profileAndName">
-                    <img src={profilePicture} alt="Profile" />
-                    <span>Streamercito</span>
-                </div>
-                <button className='follow'>Seguir</button>
-            </div>
-            <div className="container-add-watch-form-body">
-                <div className="add-watch-form-body">
-                    
-                    <video ref={videoRef} className="video-preview" muted />
-                </div>
-                {!isStreaming ? (
-                    <button className="start-button" onClick={startStream}>
-                        Iniciar Transmisión
-                    </button>
-                ) : (
-                    <button className="stop-button" onClick={stopStream}>
-                        Detener y Guardar
-                    </button>
-                )}
-            </div>
-            <div className='letterSize'>
-                <h1>{streamData.title}</h1>
-                <h1>Descripción</h1>
-            </div>
-            <p id='descript'>{streamData.description}</p>
-        </main>
+        <div className="video-stream">
+            <video ref={videoRef} className="video-preview" muted />
+            {!isStreaming ? (
+                <button className="start-button" onClick={startStream}>
+                    Iniciar Transmisión
+                </button>
+            ) : (
+                <button className="stop-button" onClick={stopStream}>
+                    Detener y Guardar
+                </button>
+            )}
+        </div>
     );
 }

@@ -41,7 +41,6 @@ export default function HeaderPage() {
 
         <div className="right-objects">
           <div className="info-coin">
-            <img className="vara-coin" src={Varacoin} />
             <Header isAccountVisible={isAccountReady} />
           </div>
           <button className="nav-open-btn" onClick={handleNavToggle}>

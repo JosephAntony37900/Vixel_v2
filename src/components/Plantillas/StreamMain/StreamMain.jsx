@@ -1,61 +1,71 @@
+import React, { useEffect, useState } from "react";
 import "./StreamMain.css";
-import ImgStream1 from "../../../img/portada-stream-1.png";
-import ImgStream2 from "../../../img/portada-stream-2.png";
-import ImgStream3 from "../../../img/portada-stream-3.png";
-import ImgStream4 from "../../../img/portada-stream-4.png";
-import FrontPageStream from "@/components/Atoms/FrontPageStream/FrontPageStream";
+import { useNavigate } from "react-router-dom";
 
-export default function StreamMain (){
+export default function StreamMain() {
+    const [liveStreams, setLiveStreams] = useState([]);
+    const [recordedStreams, setRecordedStreams] = useState([]);
+    const navigate = useNavigate();
 
-    const objStream1 = {
-        srcPortada: ImgStream1,
-        views: 500,
-        title: "Saco mi modo crack en vivo - whaleXpace",
-        nameStreamer: "Fernanfloo"
-    }
+    useEffect(() => {
+        // Cargar transmisiones grabadas desde localStorage
+        const recordedVideos = JSON.parse(localStorage.getItem('recordedVideos')) || [];
+        setRecordedStreams(recordedVideos);
 
-    const objStream2 = {
-        srcPortada: ImgStream2,
-        views: 666,
-        title: "Nunca jueges Coin Drifters a las 3:33 am",
-        nameStreamer: "Sobrenatural"
-    }
+        // Simular transmisión en vivo (puedes reemplazarlo con tu lógica real)
+        const liveStream = JSON.parse(localStorage.getItem('currentStream')) || null;
+        if (liveStream) {
+            setLiveStreams([liveStream]);
+        }
+    }, []);
 
-    const objStream3 = {
-        srcPortada: ImgStream3,
-        views: 207,
-        title: "planeta wigeta ep 30",
-        nameStreamer: "Wigeta 117"
-    }
+    const handleWatchLiveStream = () => {
+        navigate("/watchStreamer");
+    };
 
-    const objStream4 = {
-        srcPortada: ImgStream4,
-        views: 1076,
-        title: "PVP insano wasa",
-        nameStreamer: "User pvp"
-    }
+    const handleWatchRecordedStream = (stream) => {
+        localStorage.setItem('selectedRecordedStream', JSON.stringify(stream));
+        navigate("/watchStreamer");
+    };
 
-    return(
+    return (
         <main className="body-streams-section">
-            <div className="search-section"></div>
-            <div className="content-streams">
-                <FrontPageStream objStream={objStream1}/>
-                <FrontPageStream objStream={objStream2}/>
-                <FrontPageStream objStream={objStream3}/>
-                <FrontPageStream objStream={objStream4}/>
+            <div className="section">
+                <h2>Transmisiones en Vivo</h2>
+                {liveStreams.length > 0 ? (
+                    <div className="content-streams">
+                        {liveStreams.map((stream, index) => (
+                            <div key={index} className="stream-card" onClick={handleWatchLiveStream}>
+                                <img src={stream.coverImage} alt="Portada del Stream" />
+                                <div className="stream-info">
+                                    <h3>{stream.title}</h3>
+                                    <p>{stream.nameStreamer}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p>No hay transmisiones en vivo actualmente.</p>
+                )}
             </div>
-            <div className="content-streams">
-                <FrontPageStream objStream={objStream1}/>
-                <FrontPageStream objStream={objStream2}/>
-                <FrontPageStream objStream={objStream3}/>
-                <FrontPageStream objStream={objStream4}/>
-            </div>
-            <div className="content-streams">
-                <FrontPageStream objStream={objStream1}/>
-                <FrontPageStream objStream={objStream2}/>
-                <FrontPageStream objStream={objStream3}/>
-                <FrontPageStream objStream={objStream4}/>
+            <div className="section">
+                <h2>Transmisiones Grabadas</h2>
+                {recordedStreams.length > 0 ? (
+                    <div className="content-streams">
+                        {recordedStreams.map((stream, index) => (
+                            <div key={index} className="stream-card" onClick={() => handleWatchRecordedStream(stream)}>
+                                <img src={stream.coverImage} alt="Portada del Stream" />
+                                <div className="stream-info">
+                                    <h3>{stream.title}</h3>
+                                    <p>{stream.nameStreamer}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p>No hay transmisiones grabadas disponibles.</p>
+                )}
             </div>
         </main>
-    )
+    );
 }

@@ -1,3 +1,4 @@
+import { color } from 'framer-motion';
 import { AccountButton } from '../account-button';
 import styles from './Wallet.module.scss';
 

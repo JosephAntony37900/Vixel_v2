@@ -26,6 +26,90 @@ export const sponsorName = 'Alice';
 export const sponsorMnemonic = 'bottom drive obey lake curtain smoke basket hold race lonely fit walk';
 // El CONTRACT_DATA solo es un ejemplo de este template, ya que es un contrato inteligente de vara para hacer las transacciones de prueba, en cambio los otros dos son mios, utilizando asi vft, porque eso me sirva
 
+export const VIXEL_CONTRACT: ContractSails = {
+  programId: '0xd6e4e6bffa2a48886f235625d80c02c4c899d981a0daee5a51f8fa27baf63a0b',
+  idl: `
+  type CheemsScapeEvents = enum {
+  ScoreRegistred: struct { message: str, id_actor: actor_id, score: u32 },
+  PlayerDontHaveEnoughScore,
+  FirstTeenBestPlayers: vec DataPlayerCheemsScape,
+};
+
+type DataPlayerCheemsScape = struct {
+  address: actor_id,
+  username: str,
+  score: u32,
+};
+
+type VixelcoinSystemEvents = enum {
+  UserRegistred: struct { message: str, actor_id: actor_id, username: str },
+  VixecoinsBought: struct { message: str, actor_id: actor_id, username: str, vara_amount: u128, vixelcoin_bought: u128, total_vixelcoin: u128 },
+  VixelcoinsEarned: struct { message: str, actor_id: actor_id, vixelcoins_amount: u128 },
+  VarasBought: struct { message: str, actor_id: actor_id, username: str, vixelcoin_amount: u128, vara_bought: u128, total_vixelcoin: u128 },
+  VixelcoinsSpended: u128,
+  VarasTransfered: struct { message: str, from: actor_id, to: actor_id, vixelcoin_amount: u128 },
+  SeeUser: struct { actor_id: actor_id, username: str, total_vixelcoins: u128 },
+  SeeBalanceOfTheProgram: struct { vixelcoins: u128, varas: u128 },
+  VixelcoinsAdded: u128,
+  VixelcoinsBurned: u128,
+  Error: VixelCoinSystemErrors,
+};
+
+type VixelCoinSystemErrors = enum {
+  UserNotFound,
+  UserExists,
+  WithoutSomeInputs,
+  MustBeGreaterThan0,
+  InsuficentBalanceInTheContract: u128,
+  InsuficentBalanceOfVixelcoinsInTheContract,
+  InsuficentVixelcoins: u128,
+  ErrorInTheTransaction,
+  StateNotInicializated,
+};
+
+type WhaleXPaceEvents = enum {
+  ScoreRegistred: struct { message: str, id_actor: actor_id, score: u32 },
+  PlayerDontHaveEnoughScore,
+  FirstTeenBestPlayers: vec DataPlayerWhaleXPace,
+};
+
+type DataPlayerWhaleXPace = struct {
+  address: actor_id,
+  username: str,
+  score: u32,
+};
+
+constructor {
+  New : (vixel_coins: u128);
+};
+
+service CheemsCapeServices {
+  SetScore : (username: str, score: u32) -> CheemsScapeEvents;
+  query GetFirstTeenPlayers : () -> CheemsScapeEvents;
+};
+
+service VixelcoinSystem {
+  AddVixelcoinsToTheContract : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  BurnVixelcoinsToTheContract : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  BuyVixelcoins : () -> VixelcoinSystemEvents;
+  EarnAwardOfVixelcoins : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  RegisterUser : (user_name: str) -> VixelcoinSystemEvents;
+  SellVixelcoins : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  SpendVixelcoinsInTheSystem : (amount_of_vixelcoins: u128) -> VixelcoinSystemEvents;
+  TransferVixelcoins : (amount_of_vixelcoins: u128, destinatary: actor_id) -> VixelcoinSystemEvents;
+  query SeeVixelcoinsOfAnUser : (adress: actor_id) -> VixelcoinSystemEvents;
+  query SeeVixelcoinsOfTheProgram : () -> VixelcoinSystemEvents;
+};
+
+service WhaleXPaceServices {
+  SetScore : (username: str, score: u32) -> WhaleXPaceEvents;
+  query GetFirstTeenPlayers : () -> WhaleXPaceEvents;
+};
+
+
+  `
+};
+
 export const CONTRACT_DATA: ContractSails = {
   programId: '0x615556ca4bb31c9b3b9a5c30b20e110ffd51ffc78784308ea6ac2f9fbac13aa5',
   idl: `

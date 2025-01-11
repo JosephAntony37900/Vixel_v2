@@ -11,10 +11,15 @@ import path from "path";
 import { VixelPay } from "./Pay/Vixel";
 import Qualifying from "./Qualifying/Qualifying";
 import Stream from "./Stream/Stream";
+import AddStream from "./AddStreaming/AddStream";
+import WatchStream from "./WatchStream/WatchStream";
+import { VixelcoinSellForm } from "./IntercambiarTokens/intercambiar";
+import WatchUser from "./WatchUser/WatchUser";
+import { RegisterUserForm } from "./UserContrats/UserContrats";
 
 
 const routes = [
-  { path: "/", Page: Landing },
+  //{ path: "/", Page: Landing },
   { path: "/home", Page: Home },
   { path: "/games", Page: OurGames },
   { path: "/tournaments", Page: Tournaments},
@@ -24,8 +29,13 @@ const routes = [
   { path: "/dataTournament", Page: DataTournament},
   {path: "/qualifying", Page: Qualifying},
   {path: "/pay", Page: VixelPay},
-  {path: "/streams", Page: Stream}
-];
+  {path: "/streams", Page: Stream},
+  {path: "/addStream", Page: AddStream},
+  {path: "/watchStream", Page: WatchStream},
+  {path: "/sell", Page: VixelcoinSellForm},
+  {path: "/watchStreamer", Page: WatchUser},
+  {path: "/", Page: RegisterUserForm}
+   ];
 
 function Routing() {
   const location = useLocation();

@@ -10,7 +10,7 @@ export default function ListPages (){
                 <NavbarOptions hreferencia={"/games"} pageName={"Juegos"}/>
                 <NavbarOptions hreferencia={"/tournaments"} pageName={"Torneos"}/>
                 <NavbarOptions hreferencia={"/streams"} pageName={"Streams"}/>
-                <NavbarOptions hreferencia={"#"} pageName={"Más"}/>
+                <NavbarOptions hreferencia={"/addStream"} pageName={"Transmitir"}/>
             </ul>
         </nav>
     )

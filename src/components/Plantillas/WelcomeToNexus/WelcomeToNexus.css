@@ -1,5 +1,10 @@
+.vixel-name-logo .logoo{
+  width: 80px;
+  height: 80px;
+}
+
 .hero {
-    background: url("../../../img/hero-banner.jpg") no-repeat;
+    background: url("../../../img/hyperlightdrifter_portada_vixel.webp") no-repeat;
     background-size: cover;
     background-position: top center;
     padding: var(--section-padding) 0;

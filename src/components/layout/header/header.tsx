@@ -1,21 +1,17 @@
-import { Logo } from './logo';
-import { AccountInfo } from './account-info';
-import styles from './header.module.scss';
-import { MultiWallet } from '@/features/multiwallet/ui/wallet';
+import { Wallet } from '@gear-js/wallet-connect';
+import Logo from '../../../icons/logito.png';
 
-type Props = {
-  isAccountVisible: boolean;
-};
-
-export function Header({ isAccountVisible }: Props) {
-  // const [isMenuOpen] = React.useState(false);
-
+function Header() {
   return (
-    <header className={styles.header}>
+    <header>
      { /*<Logo />*/}
-      {isAccountVisible && <MultiWallet/>}
+
+      <Wallet
+        theme="vara" // 'vara' (default) or 'gear' theme variation
+        displayBalance={true} // true (default) or false
+      />
     </header>
   );
-
-  
 }
+
+export { Header };

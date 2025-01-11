@@ -49,7 +49,7 @@ export default function FooterPage () {
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright">
-          Copyright &copy; 2024 <a href="#">VIXEL</a>. all rights reserved
+          Copyright &copy; 2025 <a href="#">VIXEL</a>. all rights reserved
         </p>
 
         <figure class="footer-bottom-img">

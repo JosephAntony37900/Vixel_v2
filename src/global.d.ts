@@ -41,3 +41,6 @@ declare global {
     walletExtension?: any;
   }
 }
+
+declare global {;
+};

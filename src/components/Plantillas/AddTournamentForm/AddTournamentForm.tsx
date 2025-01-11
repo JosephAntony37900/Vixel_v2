@@ -54,7 +54,7 @@ export default function AddTournamentForm (){
             <div className="add-tournaments-from-camps">
                 <h1>Tipo de premio</h1>
                 <select id="get-trophy-tournament">
-                    <option>Etherium</option>
+                    <option>gVARA</option>
                     <option>NFT</option>
                     <option>Otro</option>
                 </select>

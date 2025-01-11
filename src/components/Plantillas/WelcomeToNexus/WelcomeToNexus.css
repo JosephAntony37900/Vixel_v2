@@ -1,3 +1,8 @@
+.vixel-name-logo .logoo{
+  width: 80px;
+  height: 80px;
+}
+
 .hero {
     background: url("../../../img/hero-banner.jpg") no-repeat;
     background-size: cover;

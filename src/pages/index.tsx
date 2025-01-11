@@ -11,6 +11,8 @@ import path from "path";
 import { VixelPay } from "./Pay/Vixel";
 import Qualifying from "./Qualifying/Qualifying";
 import Stream from "./Stream/Stream";
+import AddStream from "./AddStreaming/AddStream";
+import WatchStream from "./WatchStream/WatchStream";
 
 
 const routes = [
@@ -24,7 +26,9 @@ const routes = [
   { path: "/dataTournament", Page: DataTournament},
   {path: "/qualifying", Page: Qualifying},
   {path: "/pay", Page: VixelPay},
-  {path: "/streams", Page: Stream}
+  {path: "/streams", Page: Stream},
+  {path: "/addStream", Page: AddStream},
+  {path: "/watchStream", Page: WatchStream}
 ];
 
 function Routing() {

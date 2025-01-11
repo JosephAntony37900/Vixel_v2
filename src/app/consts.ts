@@ -26,6 +26,68 @@ export const sponsorName = 'Alice';
 export const sponsorMnemonic = 'bottom drive obey lake curtain smoke basket hold race lonely fit walk';
 // El CONTRACT_DATA solo es un ejemplo de este template, ya que es un contrato inteligente de vara para hacer las transacciones de prueba, en cambio los otros dos son mios, utilizando asi vft, porque eso me sirva
 
+export const GVARA_CONTRACT: ContractSails = {
+  programId: '0x7d9ceb9aaf2c76a476c3f4eb777fd6ee43553cb7a3a3cd69f6e479dd821d1ddb',
+  idl: `
+  type KeyringData = struct {
+      address: str,
+      encoded: str,
+    };
+
+    type KeyringEvent = enum {
+      KeyringAccountSet,
+      Error: KeyringError,
+    };
+
+    type KeyringError = enum {
+      KeyringAddressAlreadyEsists,
+      UserAddressAlreadyExists,
+      UserCodedNameAlreadyExists,
+      UserDoesNotHasKeyringAccount,
+      KeyringAccountAlreadyExists,
+      SessionHasInvalidCredentials,
+      UserAndKeyringAddressAreTheSame,
+    };
+
+    type PingEvent = enum {
+      Ping,
+      Pong,
+      KeyringError: KeyringError,
+    };
+
+    type KeyringQueryEvent = enum {
+      LastWhoCall: actor_id,
+      SignlessAccountAddress: opt actor_id,
+      SignlessAccountData: opt KeyringData,
+    };
+
+    constructor {
+      New : ();
+    };
+
+    service KeyringService {
+      BindKeyringDataToUserAddress : (user_address: actor_id, keyring_data: KeyringData) -> KeyringEvent;
+      BindKeyringDataToUserCodedName : (user_coded_name: str, keyring_data: KeyringData) -> KeyringEvent;
+    };
+
+    service Ping {
+      Ping : () -> PingEvent;
+      PingNoWallet : (user_coded_name: str) -> PingEvent;
+      PingSignless : (user_address: actor_id) -> PingEvent;
+      Pong : () -> PingEvent;
+      PongNoWallet : (user_coded_name: str) -> PingEvent;
+      PongSignless : (user_address: actor_id) -> PingEvent;
+    };
+
+    service QueryService {
+      query LastCaller : () -> actor_id;
+      query KeyringAccountData : (keyring_address: actor_id) -> KeyringQueryEvent;
+      query KeyringAddressFromUserAddress : (user_address: actor_id) -> KeyringQueryEvent;
+      query KeyringAddressFromUserCodedName : (user_coded_name: str) -> KeyringQueryEvent;
+    };
+  `
+};
+
 export const CONTRACT_DATA: ContractSails = {
   programId: '0x615556ca4bb31c9b3b9a5c30b20e110ffd51ffc78784308ea6ac2f9fbac13aa5',
   idl: `
